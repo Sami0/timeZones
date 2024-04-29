@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title> london/denver conversion table </title>
+<script>
+
+    // create function with paramters for each location 
+    function generateTimeConversionTable(startHour = 0, endHour = 23, londonOffset = 0, denverOffset = -7) {
+    const londonTime = new Date();
+    const denverTime = new Date();
+
+    // Set the date to a specific date for consistency
+    londonTime.setFullYear(2024, 3, 28); // Month is 0-indexed (April is 3)
+    denverTime.setFullYear(2024, 3, 28); // Month is 0-indexed (April is 3)
+
+    //create html table 
+    const table = document.createElement('table');
+    const tbody = document.createElement('tbody');
+    const headerRow = document.createElement('tr');
+    const londonHeader = document.createElement('th');
+    londonHeader.textContent = 'London Time';
+    const denverHeader = document.createElement('th');
+    denverHeader.textContent = 'Denver Time';
+    headerRow.appendChild(londonHeader);
+    headerRow.appendChild(denverHeader);
+    tbody.appendChild(headerRow);
+
+    // major for loop to iterate the hours that will be shown in the table 
+    for (let hour = startHour; hour <= endHour; hour++) {
+        londonTime.setHours(hour + londonOffset);
+        denverTime.setHours(hour + denverOffset);
+
+        const row = document.createElement('tr');
+        const londonCell = document.createElement('td');
+        londonCell.textContent = londonTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+        const denverCell = document.createElement('td');
+        denverCell.textContent = denverTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+        row.appendChild(londonCell);
+        row.appendChild(denverCell);
+        tbody.appendChild(row);
+    }
+
+    table.appendChild(tbody);
+    document.body.appendChild(table);
+}
+
+generateTimeConversionTable();
+</script>
+    </head>
+
+    <body>
+<p> time zone conversion table between london and denver</p>
+<button  onclick="generateTimeConversionTable()">show time table</button>
+    </body>
+</html>
